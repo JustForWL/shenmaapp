@@ -18,7 +18,7 @@ public class NetUtil {
 		NetworkInfo info = connManager.getActiveNetworkInfo();
 		if (info != null && info.isAvailable()) {
 //			String name = info.getTypeName();
-//			L.i("当前网络名称：" + name);
+//			Logger.i("当前网络名称：" + name);
 			isNetConnected = true;
 		} else {
 			Logger.i("没有可用网络");

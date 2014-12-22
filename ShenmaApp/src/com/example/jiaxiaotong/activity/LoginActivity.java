@@ -7,7 +7,7 @@ import com.example.jiaxiaotong.constants.AllTypes;
 import com.example.jiaxiaotong.constants.App;
 import com.example.jiaxiaotong.utils.LoadingDialog;
 import com.example.jiaxiaotong.utils.Logger;
-import com.example.jiaxiaotong.utils.MyConnection;
+import com.example.jiaxiaotong.utils.XMPPManager;
 import com.example.jiaxiaotong.utils.NetUtil;
 import com.example.jiaxiaotong.utils.SharePreferencesUtil;
 import com.example.jiaxiaotong.utils.T;
@@ -72,36 +72,8 @@ public class LoginActivity extends BaseActivity implements OnClickListener{
 			T.showLong(this, "用户名或密码不能为空");
 			return;
 		}else{
-			if(!NetUtil.isNetConnected(this)){
-				T.showShort(this, R.string.net_disconnect_hint);
-				return;
-			}
-			handler.postDelayed(connectionTimeoutCallBack, App.TIME_DELAY_LOADING);
-			loadingDialog.show(getFragmentManager(), "登录中");
-			loadingDialog.setCancelable(false);
-			XMPPConnection myConnection = MyConnection.getInstance();
-			try{
-				myConnection.login(userAccount, userPassword);
-				SharePreferencesUtil.writeIsFirstLogin(this);
-				SharePreferencesUtil.writeLoginAccount(this, userAccount);
-				if(userAccount.startsWith("p")) {
-					openActivity(ParentFrame.class);
-					SharePreferencesUtil.writeLoginType(this, AllTypes.PARENTS.toString());
-				}else if(userAccount.startsWith("t")) {
-					openActivity(TeacherFrame.class);
-					SharePreferencesUtil.writeLoginType(this, AllTypes.TEACHERS.toString());
-				}else if(userAccount.startsWith("h")){
-					openActivity(HeadTeacherFrame.class);
-					SharePreferencesUtil.writeLoginType(this, AllTypes.HEADETEACHER.toString());
-				}else{
-					T.showLong(this, "无效的用户名");
-					return;
-				}
-				this.finish();
-			} catch(Exception e){
-				Logger.i("登录失败");
-				return;
-			}
+			Thread loginServiceThread = new Thread(new LoginThread(userAccount, userPassword));
+			loginServiceThread.start();
 		}
 	}
 
@@ -111,5 +83,64 @@ public class LoginActivity extends BaseActivity implements OnClickListener{
 		super.onDestroy();
 	}
 	
-	
+	class LoginThread implements Runnable{
+		
+		private String userAccount;
+		private String userPassword;
+		
+		public LoginThread(String userName, String userPass) {
+			this.userAccount = userName;
+			this.userPassword = userPass;
+		}
+		@Override
+		public void run() {
+			// TODO Auto-generated method stub
+			if(!NetUtil.isNetConnected(LoginActivity.this)){
+				T.showShort(LoginActivity.this, R.string.net_disconnect_hint);
+				return;
+			}
+			handler.postDelayed(connectionTimeoutCallBack, App.TIME_DELAY_LOADING);
+			loadingDialog.show(getFragmentManager(), "LOAD_DIALOG");
+			loadingDialog.setCancelable(false);
+			try{
+				XMPPManager myConnection = XMPPManager.getInstance();
+				System.out.println(userPassword);
+				String loginState = myConnection.isLogin(userAccount, userPassword);
+				if(loginState.equals("SUCCESS")) {
+					SharePreferencesUtil.writeIsFirstLogin(LoginActivity.this);
+					SharePreferencesUtil.writeLoginAccount(LoginActivity.this, userAccount);
+					if(userAccount.startsWith("p")) {
+						new Thread(new ParseLoginParam()).start();
+						openActivity(ParentFrame.class);
+						SharePreferencesUtil.writeLoginType(LoginActivity.this, AllTypes.PARENTS.toString());
+					}else if(userAccount.startsWith("t")) {
+						openActivity(TeacherFrame.class);
+						SharePreferencesUtil.writeLoginType(LoginActivity.this, AllTypes.TEACHERS.toString());
+					}else if(userAccount.startsWith("h")){
+						openActivity(HeadTeacherFrame.class);
+						SharePreferencesUtil.writeLoginType(LoginActivity.this, AllTypes.HEADETEACHER.toString());
+					}
+				 }else{
+					T.showLong(LoginActivity.this, "无效的用户名");
+					return;
+				}
+				LoginActivity.this.finish();
+			} catch(Exception e){
+				e.printStackTrace();
+				Logger.i("登录失败");
+				return;
+			}
+		}
+		
+	}
+	//登录服务器，解析服务器返回的json数据，并存储相应的数据
+	class ParseLoginParam implements Runnable {
+
+		@Override
+		public void run() {
+			// TODO Auto-generated method stub
+			
+		}
+		
+	}
 }

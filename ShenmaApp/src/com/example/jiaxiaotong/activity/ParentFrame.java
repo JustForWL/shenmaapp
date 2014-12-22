@@ -9,7 +9,8 @@ import com.example.jiaxiaotong.fragment.InfoFragment;
 import com.example.jiaxiaotong.fragment.KidFragment;
 import com.example.jiaxiaotong.fragment.StuFragment;
 import com.example.jiaxiaotong.fragment.TchFragment;
-
+import com.example.jiaxiaotong.utils.Logger;
+import android.app.ActionBar.TabListener;
 import android.app.ActionBar;
 import android.app.ActionBar.Tab;
 import android.app.Activity;
@@ -82,27 +83,26 @@ public class ParentFrame extends BaseFrame {
 			@Override
 			public void onPageScrollStateChanged(int arg0) {
 				// TODO Auto-generated method stub
-				
 			}
 
 			@Override
 			public void onPageScrolled(int arg0, float arg1, int arg2) {
 				// TODO Auto-generated method stub
-				mViewPager.setCurrentItem(arg0);
-				actionBar.setSelectedNavigationItem(arg0);
+				//actionBar.setSelectedNavigationItem(arg0);
 			}
 
 			@Override
 			public void onPageSelected(int arg0) {
 				// TODO Auto-generated method stub
-				
+				actionBar.setSelectedNavigationItem(arg0);
 			}
     		
     	});
     	
     	for(int i=0;i<MAX_TAB_SIZE;i++){  
             Tab tab = actionBar.newTab();  
-            tab.setText(mAdapter.getPageTitle(i)).setTabListener(this);  
+            tab.setText(mAdapter.getPageTitle(i)).setTabListener(this);
+            tab.setTabListener(this);
             actionBar.addTab(tab);  
         }  
     	actionBar.setSelectedNavigationItem(0);
@@ -112,6 +112,8 @@ public class ParentFrame extends BaseFrame {
 	@Override
 	public void onTabSelected(Tab tab, FragmentTransaction ft) {
 		// TODO Auto-generated method stub
+		//actionBar.setSelectedNavigationItem(tab.getPosition());
+		//Logger.i(tab.getPosition()+"click");
 		mViewPager.setCurrentItem(tab.getPosition());
 	}
 
@@ -169,4 +171,5 @@ public class ParentFrame extends BaseFrame {
 		}
 		
 	}
+	
 }

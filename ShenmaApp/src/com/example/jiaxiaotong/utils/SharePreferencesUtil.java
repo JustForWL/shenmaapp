@@ -72,4 +72,22 @@ public class SharePreferencesUtil {
 		String loginAccount = preferences.getString(App.LOGIN_ACCOUNT, "");
 		return loginAccount;
 	}
+	
+	public static boolean writeCurrentChild(Context context, String currentChild) {
+		SharedPreferences preferences = getSharedPreferences(context, App.APP_NAME);
+		if (preferences == null)
+			return false;
+		Editor editor = preferences.edit();
+		editor.putString(App.CURRENTCHILD, currentChild);
+		editor.commit();
+		return true;
+	}
+	
+	public static String readCurrentChild(Context context) {
+		SharedPreferences preferences = getSharedPreferences(context, App.APP_NAME);
+		if (preferences == null)
+			return "";
+		String loginAccount = preferences.getString(App.CURRENTCHILD, "");
+		return loginAccount;
+	}
 }

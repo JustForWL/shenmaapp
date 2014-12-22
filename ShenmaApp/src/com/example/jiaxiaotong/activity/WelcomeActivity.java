@@ -43,21 +43,41 @@ public class WelcomeActivity extends BaseActivity {
 			App.TIME_DELAY_ACTIVITY);
 		}else{
 			loginType = SharePreferencesUtil.readLoginType(mContext);
-			for(AllTypes type : AllTypes.values()) {
-				if(type.toString().equals(loginType)) {
-					new Handler().postDelayed(new Runnable(){
-
-						@Override
-						public void run() {
-							// TODO Auto-generated method stub
-							openActivity(loginType);
-						}
-						
-					}, 
-					App.TIME_DELAY_ACTIVITY);
-				}
-			}
+			if(loginType.equals("ParentFrame")){
+				new Handler().postDelayed(new Runnable(){
+					
+					@Override
+					public void run() {
+						// TODO Auto-generated method stub
+						openActivity(ParentFrame.class);
+					}
+					
+				}, 
+				App.TIME_DELAY_ACTIVITY);
+			}else if(loginType.equals("TeacherFrame")){
+				new Handler().postDelayed(new Runnable(){
+					
+					@Override
+					public void run() {
+						// TODO Auto-generated method stub
+						openActivity(TeacherFrame.class);
+					}
+					
+				}, 
+				App.TIME_DELAY_ACTIVITY);
+			} else {
+				new Handler().postDelayed(new Runnable(){
+					
+					@Override
+					public void run() {
+						// TODO Auto-generated method stub
+						openActivity(HeadTeacherFrame.class);
+					}
+					
+				}, 
+				App.TIME_DELAY_ACTIVITY);
+			}				
 		}
+		
 	}
-	
 }

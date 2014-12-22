@@ -45,12 +45,13 @@ public class BaseActivity extends FragmentActivity {
     
 	/**
 	 * 通过Action名启动Activity，并且含有Bundle数据
-	 * @param pAction
+	 * @param pClassName
 	 * @param pBundle
 	 */
-	protected void openActivity(String pAction, Bundle pBundle) {
+	protected void openActivity(String pClassName, Bundle pBundle) {
 		// TODO Auto-generated method stub
-		Intent intent = new Intent(pAction);
+		Intent intent = new Intent();
+		intent.setClassName("com.example.jiaxiaotong.activity", pClassName);
 		if (pBundle != null){
 			intent.putExtras(pBundle);
 		}

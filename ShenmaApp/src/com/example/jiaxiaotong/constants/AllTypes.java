@@ -7,9 +7,9 @@ package com.example.jiaxiaotong.constants;
  */
 public enum AllTypes {
 	
-	HEADETEACHER(".activity.HeadTeacherFrame"), 
-	TEACHERS(".activity.TeacherFrame"), 
-	PARENTS(".activity.ParentFrame");
+	HEADETEACHER("HeadTeacherFrame"), 
+	TEACHERS("TeacherFrame"), 
+	PARENTS("ParentFrame");
 	
 	private String type;
 	
