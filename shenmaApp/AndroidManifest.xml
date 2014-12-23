@@ -36,6 +36,11 @@
         </activity>
         <activity
             android:name=".activity.ParentFrame">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
         </activity>
         <activity
             android:name=".activity.LoginActivity">
@@ -49,11 +54,6 @@
         <activity
             android:name=".activity.ChatActivity" 
             android:windowSoftInputMode="adjustResize|stateHidden">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
-
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
         </activity>
         <uses-library android:name="android.test.runner" />
     </application>
