@@ -59,7 +59,7 @@
             android:inputType="textMultiLine"
             android:gravity="left|top"
             android:singleLine="true"
-            android:background="@drawable/edittext1"
+            android:layout_below="@drawable/edittext1"
             android:textSize="18sp" />
     </RelativeLayout>
 

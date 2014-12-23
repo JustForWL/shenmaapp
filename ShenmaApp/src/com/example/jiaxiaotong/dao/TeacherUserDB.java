@@ -73,12 +73,12 @@ public class TeacherUserDB extends DBConnection {
 	public boolean saveUser(TeacherUserBean user) {
 		final SQLiteDatabase db = getWritableDatabase();
 		try{
-			SQLiteStatement stmt = null;
-			String sql = "insert into " + TEACHER_TABLE + " values (?, ?, ?, ?, ?);";
-			stmt = db.compileStatement(sql);
-			stmt.bindAllArgsAsStrings(new String[]{user.getUserAccount(), user.getUserName(), 
-									user.getIconAddr(), user.getRole(), user.getStudent()});
-			stmt.executeInsert();
+		SQLiteStatement stmt = null;
+		String sql = "insert into " + TEACHER_TABLE + " values (?, ?, ?, ?, ?);";
+		stmt = db.compileStatement(sql);
+		stmt.bindAllArgsAsStrings(new String[]{user.getUserAccount(), user.getUserName(), 
+								user.getIconAddr(), user.getRole(), user.getStudent()});
+		stmt.executeInsert();
 		} catch(Exception e) {
 			e.printStackTrace();
 			return false;
@@ -88,28 +88,24 @@ public class TeacherUserDB extends DBConnection {
 	
 	public ArrayList<TeacherUserBean> getUsersByStudent(String student) {
 		ArrayList<TeacherUserBean> users = new ArrayList<TeacherUserBean>();
-		try{
-			final SQLiteDatabase db = getReadableDatabase();
-			Cursor cursor;
-			cursor = db.query(TEACHER_TABLE, new String[]{USER_ACCOUNT, USER_NAME, USER_ICONADDR, USER_ROLE}, 
-					STUDENT + "='" + student + "'", 
-					null, null, null, USER_ROLE, null);
-			if(cursor.moveToFirst()) {
-				for(int i = 0; i < cursor.getCount(); i++) {
-					TeacherUserBean user = new TeacherUserBean();
-					user.setUserAccount(cursor.getString(cursor.getColumnIndex(USER_ACCOUNT)));
-					user.setUserName(cursor.getString(cursor.getColumnIndex(USER_NAME)));
-					user.setIconAddr(cursor.getString(cursor.getColumnIndex(USER_ICONADDR)));
-					user.setRole(cursor.getString(cursor.getColumnIndex(USER_ROLE)));
-					user.setStudent(student);
-					users.add(user);
-					cursor.moveToNext();
-				}
+		final SQLiteDatabase db = getReadableDatabase();
+		Cursor cursor;
+		cursor = db.query(TEACHER_TABLE, new String[]{USER_ACCOUNT, USER_NAME, USER_ICONADDR, USER_ROLE}, 
+				STUDENT + "='" + student + "'", 
+				null, null, null, USER_ROLE, null);
+		if(cursor.moveToFirst()) {
+			for(int i = 0; i < cursor.getCount(); i++) {
+				TeacherUserBean user = new TeacherUserBean();
+				user.setUserAccount(cursor.getString(cursor.getColumnIndex(USER_ACCOUNT)));
+				user.setUserName(cursor.getString(cursor.getColumnIndex(USER_NAME)));
+				user.setIconAddr(cursor.getString(cursor.getColumnIndex(USER_ICONADDR)));
+				user.setRole(cursor.getString(cursor.getColumnIndex(USER_ROLE)));
+				user.setStudent(student);
+				users.add(user);
+				cursor.moveToNext();
 			}
-			cursor.close();
-		} catch(Exception e) {
-			e.printStackTrace();
 		}
+		cursor.close();
 		return users;
 	}
 }

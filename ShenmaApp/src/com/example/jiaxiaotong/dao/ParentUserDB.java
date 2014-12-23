@@ -91,27 +91,23 @@ public class ParentUserDB extends DBConnection{
 	
 	public ArrayList<ParentUserBean> getUsersByClassmate(String classmate) {
 		ArrayList<ParentUserBean> users = new ArrayList<ParentUserBean>();
-		try{	
-			final SQLiteDatabase db = getReadableDatabase();
-			Cursor cursor;
-			cursor = db.query(USER_TABLE, new String[]{USER_ACCOUNT, USER_NAME, USER_ICONADDR}, 
-					USER_CLASSMATE + "='" + classmate + "'", 
-					null, null, null, USER_ACCOUNT, null);
-			if(cursor.moveToFirst()) {
-				for(int i = 0; i < cursor.getCount(); i++) {
-					ParentUserBean user = new ParentUserBean();
-					user.setUserAccount(cursor.getString(cursor.getColumnIndex(USER_ACCOUNT)));
-					user.setUserName(cursor.getString(cursor.getColumnIndex(USER_NAME)));
-					user.setIconAddr(cursor.getString(cursor.getColumnIndex(USER_ICONADDR)));
-					user.setClassmate(classmate);
-					users.add(user);
-					cursor.moveToNext();
-				}
+		final SQLiteDatabase db = getReadableDatabase();
+		Cursor cursor;
+		cursor = db.query(USER_TABLE, new String[]{USER_ACCOUNT, USER_NAME, USER_ICONADDR}, 
+				USER_CLASSMATE + "='" + classmate + "'", 
+				null, null, null, USER_ACCOUNT, null);
+		if(cursor.moveToFirst()) {
+			for(int i = 0; i < cursor.getCount(); i++) {
+				ParentUserBean user = new ParentUserBean();
+				user.setUserAccount(cursor.getString(cursor.getColumnIndex(USER_ACCOUNT)));
+				user.setUserName(cursor.getString(cursor.getColumnIndex(USER_NAME)));
+				user.setIconAddr(cursor.getString(cursor.getColumnIndex(USER_ICONADDR)));
+				user.setClassmate(classmate);
+				users.add(user);
+				cursor.moveToNext();
 			}
-			cursor.close();
-		} catch(Exception e) {
-			e.printStackTrace();
 		}
+		cursor.close();
 		return users;
 	}
 	

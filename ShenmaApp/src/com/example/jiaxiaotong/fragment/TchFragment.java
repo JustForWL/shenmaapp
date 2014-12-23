@@ -39,7 +39,7 @@ public class TchFragment extends Fragment{
 		view = inflater.inflate(R.layout.activity_teacher_fragment, container, false);
 		teachersView = (ListView) view.findViewById(R.id.listview_teacher);
 		tdb = new TeacherUserDB(getActivity());
-		//test();
+		test();
 		initData();
 		return view;
 	}

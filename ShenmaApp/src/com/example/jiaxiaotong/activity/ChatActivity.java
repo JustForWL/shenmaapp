@@ -35,11 +35,11 @@ public class ChatActivity extends Activity{
 	protected void onCreate(Bundle savedInstanceState) {
 		// TODO Auto-generated method stub
 		super.onCreate(savedInstanceState);
-		requestWindowFeature(Window.FEATURE_NO_TITLE);
-		setContentView(R.layout.activity_chat);
-		//setContentView(R.layout.chatting_item_msg_text_left);
-		initView();
-		//test();
+		//requestWindowFeature(Window.FEATURE_NO_TITLE);
+		//setContentView(R.layout.activity_chat);
+		setContentView(R.layout.chatting_item_msg_text_left);
+		//initView();
+		test();
 	}
 	
 	private void initView() {
@@ -61,7 +61,7 @@ public class ChatActivity extends Activity{
 		ChatMessageBean message = new ChatMessageBean();
 		tv_sendTime.setText(Util.formatDate(new Date()));
 		//iv_userhead.setBackground(Util.getBackground("ic_launcher.png"));
-		tv_content.setText("大家好,我是名侦探毛利小五郎，我非常喜欢喝啤酒。");
+		tv_content.setText("大家好");
 		tv_username.setText("毛利小五郎");
 	}
 	
@@ -69,9 +69,6 @@ public class ChatActivity extends Activity{
         private ArrayList<ChatMessageBean> messages = null;
 		private LayoutInflater layoutInflater = null;
 		private Context context = null;
-		private int COME = 1; //发送的消息
-		private int TO = 0; //接收的消息
-		
 		public MessageAdapter(Context context, ArrayList<ChatMessageBean> messages) {
 			this.messages = messages;
 			this.layoutInflater = LayoutInflater.from(context);
@@ -94,24 +91,6 @@ public class ChatActivity extends Activity{
 		public long getItemId(int position) {
 			// TODO Auto-generated method stub
 			return position;
-		}
-		
-		
-		@Override
-		public int getItemViewType(int position) {
-			// TODO Auto-generated method stub
-			ChatMessageBean message = this.messages.get(position);
-			if(message.getFrom().equals(SharePreferencesUtil.readLoginAccount(context))){
-				return TO;
-			}else {
-				return COME;
-			}
-		}
-
-		@Override
-		public int getViewTypeCount() {
-			// TODO Auto-generated method stub
-			return 2;
 		}
 
 		@Override

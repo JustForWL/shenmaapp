@@ -37,8 +37,8 @@
             style="@style/chat_content_date_style"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="5dp"
-          
+            android:layout_marginLeft="0dp"
+            android:gravity="left|center"
             android:layout_toRightOf="@id/iv_userhead"
             android:background="@drawable/chatfrom_bg" />
 
