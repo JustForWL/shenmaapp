@@ -54,7 +54,7 @@ public class StuFragment extends Fragment {
 		view = inflater.inflate(R.layout.activity_student_fragment, container, false);
 		students = (ListView) view.findViewById(R.id.listview_student);
 		pdb = new ParentUserDB(getActivity());
-		test();
+		//test();
 		initData();
 		return view;
 	}
