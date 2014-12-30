@@ -2,8 +2,14 @@ package com.example.jiaxiaotong.activity;
 
 import java.lang.reflect.Field;
 import java.lang.reflect.Method;
+import java.util.List;
+
+import com.example.jiaxiaotong.utils.Logger;
 
 import android.app.Activity;
+import android.location.Location;
+import android.location.LocationListener;
+import android.location.LocationManager;
 import android.os.Bundle;
 import android.support.v4.app.FragmentActivity;
 import android.view.Menu;
@@ -13,6 +19,7 @@ import android.app.ActionBar;
 import android.app.ActionBar.Tab;
 import android.app.ActionBar.TabListener;
 import android.app.FragmentTransaction;
+import android.content.Context;
 
 /**
  * Base frame for all frame
@@ -21,12 +28,37 @@ import android.app.FragmentTransaction;
  */
 public class BaseFrame extends FragmentActivity implements TabListener{
     public ActionBar actionBar = null;
+	private LocationManager locationManager;
+	private String provider;
+	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		// TODO Auto-generated method stub
 		super.onCreate(savedInstanceState);
 		initView();
 		setOverflowShowingAlways();
+		/*
+		 * 
+		 * This section is for GPS use
+		 * ONLY
+		 * 
+		 */
+		locationManager = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
+		List<String> providerList = locationManager.getProviders(true);
+		if(providerList.contains(LocationManager.GPS_PROVIDER)){
+			provider = LocationManager.GPS_PROVIDER;
+		}else if(providerList.contains(LocationManager.NETWORK_PROVIDER)){
+			provider = LocationManager.NETWORK_PROVIDER;
+		}else{
+			
+		}
+		
+		Location location = locationManager.getLastKnownLocation(provider);
+		if(location!=null){
+			showLocation(location);
+		}
+		
+		locationManager.requestLocationUpdates(provider, 500, 1, locationListener);
 	}
 	
 	public ActionBar configActionBar() {
@@ -88,5 +120,39 @@ public class BaseFrame extends FragmentActivity implements TabListener{
 		// TODO Auto-generated method stub
 		
 	}
+	
+	private void showLocation(Location location){
+		String locmsg = "latitude is " + location.getLatitude() + "AORDF" + "longitude is" + location.getLongitude();
+		Logger.i(locmsg);
+	}
+	
+	LocationListener locationListener = new LocationListener(){
+
+		@Override
+		public void onLocationChanged(Location location) {
+			// TODO Auto-generated method stub
+			showLocation(location);
+		}
+
+		@Override
+		public void onProviderDisabled(String arg0) {
+			// TODO Auto-generated method stub
+			
+		}
+
+		@Override
+		public void onProviderEnabled(String arg0) {
+			// TODO Auto-generated method stub
+			
+		}
+
+		@Override
+		public void onStatusChanged(String arg0, int arg1, Bundle arg2) {
+			// TODO Auto-generated method stub
+			
+		}
+		
+		
+	};
     
 }

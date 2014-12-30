@@ -11,6 +11,8 @@ public class TeacherUserBean {
 	private String iconAddr = null;
 	private String role = null;
 	private String student = null;
+	private String lastwords = null;
+	private String ConTime = null;
 	public String getUserAccount() {
 		return userAccount;
 	}
@@ -40,6 +42,20 @@ public class TeacherUserBean {
 	}
 	public void setStudent(String student) {
 		this.student = student;
+	}
+	public void setLastWord(String lastwords){
+		this.lastwords = lastwords;
+	}
+	public CharSequence getLastWord() {
+		// TODO Auto-generated method stub
+		return lastwords;
+	}
+	public void setConTime(String ConTime){
+		this.ConTime  = ConTime;
+	}
+	public CharSequence getConTime() {
+		// TODO Auto-generated method stub
+		return ConTime;
 	}
 	
 	

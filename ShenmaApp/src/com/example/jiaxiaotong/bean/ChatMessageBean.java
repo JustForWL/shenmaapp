@@ -10,6 +10,7 @@ import java.util.Date;
  * 字段content表示消息的内容
  * 字段isRead表示是否读过
  * 字段isMulticast表示是否为群消息
+ * 字段lastwords表示针对from或者to的最后一条消息
  * @author Arthur
  *
  */
@@ -24,7 +25,9 @@ public class ChatMessageBean {
 	private int isRead;
 	private int isMulticast;
 	private String from_group = null;
+	private String LastWords;
 	
+
 	public String getFrom() {
 		return from;
 	}
@@ -79,6 +82,11 @@ public class ChatMessageBean {
 	public void setToAccount(String toAccount) {
 		this.toAccount = toAccount;
 	}
-	
+	public void setLastWords(String Lastwords){
+		this.LastWords = getContent();
+	}
+	public String getLastWords() {
+		return LastWords;
+	}
 	
 }

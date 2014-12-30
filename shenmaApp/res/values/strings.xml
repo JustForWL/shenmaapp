@@ -13,9 +13,15 @@
     <string name="action_qunliao">发起聊天</string>
     <string name="action_feedback">意见反馈</string>
     <string name="login_user_hint">帐号</string>
-	<string name="login_passwd_hint">密码</string>
-	<string name="main_login">登录</string>
-	<string name="net_disconnect_hint">目前没有网络</string>
-	<string name="back">返回</string>
-	<string name="send">发送</string>
+    <string name="login_passwd_hint">密码</string>
+    <string name="main_login">登录</string>
+    <string name="net_disconnect_hint">目前没有网络</string>
+    <string name="back">返回</string>
+    <string name="send">发送</string>
+    <string name="title_activity_feedback">Feedback</string>
+    <string name="title_activity_search">SearchActivity</string>
+    <string name="hellofragment">Hello blank fragment</string>
+    <string name="title_search_hint">输入孩子姓名</string>
+    <string name="title_activity_settings">SettingsActivity</string>
+
 </resources>

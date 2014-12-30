@@ -2,19 +2,25 @@ package com.example.jiaxiaotong.activity;
 
 import java.lang.reflect.Field;
 import java.lang.reflect.Method;
-
+import java.util.ArrayList;
 
 import com.example.jiaxiaotong.R;
 import com.example.jiaxiaotong.fragment.InfoFragment;
 import com.example.jiaxiaotong.fragment.KidFragment;
 import com.example.jiaxiaotong.fragment.StuFragment;
 import com.example.jiaxiaotong.fragment.TchFragment;
+import com.example.jiaxiaotong.menu.FeedbackFragment;
+import com.example.jiaxiaotong.menu.SearchActivity;
+import com.example.jiaxiaotong.menu.SettingsActivity;
+import com.example.jiaxiaotong.menu.onRefreshItemSelected;
 import com.example.jiaxiaotong.utils.Logger;
+
 import android.app.ActionBar.TabListener;
 import android.app.ActionBar;
 import android.app.ActionBar.Tab;
 import android.app.Activity;
 import android.app.FragmentTransaction;
+import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
@@ -23,45 +29,64 @@ import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.support.v4.view.ViewPager.OnPageChangeListener;
+import android.text.TextUtils;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.ViewConfiguration;
 import android.view.Window;
+import android.widget.ArrayAdapter;
+import android.widget.ListView;
+import android.widget.SearchView;
+import android.widget.Toast;
 
 
-public class ParentFrame extends BaseFrame {
+public class ParentFrame extends BaseFrame{
     
 	public static final String[] TABS = {"公告信息", "班级学生", "教师信息", "我的孩子"};
     public static final int MAX_TAB_SIZE = 4;
     private ViewPager mViewPager = null;
     private TabFragmentPagerAdapter mAdapter = null;
-    
+
+
     protected void onCreate(Bundle savedInstanceState) {
         setContentView(R.layout.activity_parent_frame);
-        super.onCreate(savedInstanceState);     
+        super.onCreate(savedInstanceState);
     }
 
-
-    @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
         getMenuInflater().inflate(R.menu.menu_prarent_frame, menu);
         return true;
+
     }
     
-    @Override
+	@SuppressWarnings("unused")
+	@Override
     public boolean onOptionsItemSelected(MenuItem item) {
         // Handle action bar item clicks here. The action bar will
         // automatically handle clicks on the Home/Up button, so long
         // as you specify a parent activity in AndroidManifest.xml.
         //int id = item.getItemId();
+    	Logger.i(item.getItemId() + "");
+    	Logger.i(R.id.action_refresh + "");
         switch (item.getItemId()){
-            case R.id.action_refresh:
-
+            case R.id.action_feedback:
+            	Intent intent = new Intent();
+            	intent.setClass(ParentFrame.this, FeedbackFragment.class);
+            	startActivity(intent);
                 return true;
             case R.id.action_search:
-
+            	Intent searchintent = new Intent();
+            	searchintent.setClass(ParentFrame.this, SearchActivity.class);
+            	startActivity(searchintent);
                 return true;
+            case R.id.action_settings:
+            	Intent settingintent = new Intent();
+            	settingintent.setClass(ParentFrame.this, SettingsActivity.class);
+            	startActivity(settingintent);
+            	return true;
+            case R.id.action_refresh:
+            	onRefreshItemSelected.RefreshAction();
 
         }
 
@@ -141,6 +166,7 @@ public class ParentFrame extends BaseFrame {
 		public Fragment getItem(int arg0) {
 			// TODO Auto-generated method stub
 			Fragment fragment = null;
+			System.out.print(arg0);
 			switch(arg0){
 			case 0:
 				fragment = new InfoFragment();
@@ -171,5 +197,5 @@ public class ParentFrame extends BaseFrame {
 		}
 		
 	}
-	
+
 }
